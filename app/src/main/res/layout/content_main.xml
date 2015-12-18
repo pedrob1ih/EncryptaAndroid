@@ -28,8 +28,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/tVSalida"
                 android:layout_gravity="top"
-                android:layout_weight="0.7"
-                android:text="asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290asssssssssssssssssssssssssssssssssssssssssssssssdqw3129381290378129038712903781290" />
+                android:layout_weight="0.7" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -58,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/eTEntradaUsuario"
                 android:layout_weight="0.7"
                 android:layout_gravity="bottom" />
 
@@ -72,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/convertir"
-                    android:id="@+id/button"
+                    android:id="@+id/bConvertir"
                     android:layout_gravity="bottom" />
             </LinearLayout>
         </LinearLayout>
