@@ -2,12 +2,10 @@ package com.dam.encryptatext;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,17 +17,17 @@ import encrypta3.Encryptacion;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView tvSalida;
-    Button bConvertir,bCopiar;
-    EditText eTEntradaUsuario;
-    Encryptacion e;
+    private TextView tvSalida;
+    private Button bConvertir,bCopiar;
+    private EditText eTEntradaUsuario;
+    private Encryptacion e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Encryptacion e= new Encryptacion("FicheroClaves");
+        e= new Encryptacion("FicheroClaves");
 
         tvSalida= (TextView) findViewById(R.id.tVSalida);
         bConvertir= (Button) findViewById(R.id.bConvertir);
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            e=new Encryptacion("FicheroClaves");
             if(eTEntradaUsuario.getText().toString()!=null){
                 tvSalida.setText(e.encripta(eTEntradaUsuario.getText().toString()));
 
@@ -82,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.cambioClaves) {
             Intent i = new Intent(MainActivity.this,GestionContraseniasActivity.class);
+            i.putExtra("nombreDelFichero",e.getNombreFichero());
             startActivity(i);
             finish();
         }

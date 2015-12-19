@@ -14,56 +14,57 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:weightSum="1">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="151dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/tVCajaDeTexto"
-                android:text="7-25-10-7-25-10-7-25-10-7-25-10-7-25-10-7-. 25-10-7-25-10-7-25-10-7-25-10-7-25-10-7-25-. 10-7-25-10-7-25-10-7-25-10-7-25-10-7-25-10-. 7-25-10-7-25-10-7-25-10-7-25-10-7-25-10-7-. 25-10-7-25-10-7-25-10-7-25-10-7-25-10-7-25-. 10-7-25-10-7-25-10-7-25-10-7-2" />
+                android:textSize="16sp"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.0">
+            android:layout_weight="4">
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:text="@string/verPatron"
                 android:id="@+id/bVerPatron" />
-
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.0" >
+            android:layout_weight="1"
+            android:baselineAligned="false">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/eTEntradaUsuario"
+                android:textAlignment="gravity"
                 android:layout_weight="1" />
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/guardar"
-                android:id="@+id/bGuardar"
-                android:layout_weight="3" />
+                android:id="@+id/bGuardar" />
 
         </LinearLayout>
 
