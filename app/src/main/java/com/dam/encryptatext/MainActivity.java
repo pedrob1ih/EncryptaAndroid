@@ -1,6 +1,9 @@
 package com.dam.encryptatext;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import encrypta3.Encryptacion;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("textoCopiado", tvSalida.getText());
+            clipboard.setPrimaryClip(clip);
         }
     };
 
@@ -73,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.cambioClaves) {
+            Intent i = new Intent(MainActivity.this,GestionContraseniasActivity.class);
+            startActivity(i);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
