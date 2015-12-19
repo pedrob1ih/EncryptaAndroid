@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         bConvertir.setOnClickListener( listenerConvertir);
         bCopiar.setOnClickListener(listenerCopiar);
 
+        Bundle b= this.getIntent().getExtras();
+        if(b!=null){
+            e= new Encryptacion(b.getString("nombreDelFichero"));
+        }
+        else
+            e= new Encryptacion("FicheroClaves");
+
     }
 
     View.OnClickListener listenerConvertir=new View.OnClickListener(){
