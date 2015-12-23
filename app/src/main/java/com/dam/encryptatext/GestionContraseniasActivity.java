@@ -46,7 +46,7 @@ public class GestionContraseniasActivity extends AppCompatActivity {
     }
 
     private String formaListado(){
-        e.ge
+//        e.ge
         int lista[][]=e.getaPatrones();
         String salida="";
         for(int i=0;i<lista.length;i++){
