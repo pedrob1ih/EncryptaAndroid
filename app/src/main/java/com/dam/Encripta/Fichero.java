@@ -33,13 +33,14 @@ public class Fichero {
                 patrones+=aNumEm[i][j];
                 patrones+='-';
             }
-            patrones+='\n';
+            patrones+='%';
         }
         try
         {
             OutputStreamWriter fout=
                     new OutputStreamWriter(this.context.openFileOutput(nombreFichero, Context.MODE_PRIVATE));
             fout.write(patrones);
+            Log.i("Info Guardar: ", patrones);
             fout.close();
         }
         catch (Exception ex)
@@ -73,24 +74,22 @@ public class Fichero {
                                     context.openFileInput(nombreFichero)));
 
             String texto = fin.readLine();
-            Log.i("Info Fichero : ",texto);
+            Log.i("Info CargarFichero: ",texto);
             fin.close();
             String temp="";
             int j=0;
             int k=0;
 
             for(int i=0;i<texto.length();i++){
-                if (isNumber(texto.charAt(i)) && temp.length()==1){
-                    aNumEm[j][k]=Integer.valueOf(temp);
-                }
-                else if(isNumber(texto.charAt(i))){
+                if(isNumber(texto.charAt(i))){
                     temp += texto.charAt(i);
                 }
                 else if(texto.charAt(i)=='-'){
+                    aNumEm[j][k]=Integer.valueOf(temp);
                     temp="";
                     k++;
                 }
-                else if(texto.charAt(i)=='\n'){
+                else if(texto.charAt(i)=='%'){
                     temp="";
                     j++;
                     k=0;

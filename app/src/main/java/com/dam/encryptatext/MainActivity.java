@@ -47,12 +47,6 @@ public class MainActivity extends AppCompatActivity {
         bConvertir.setOnClickListener(listenerConvertir);
         bCopiar.setOnClickListener(listenerCopiar);
 
-        Bundle b = this.getIntent().getExtras();
-        if (b != null) {
-            e = new Encryptacion(b.getString("nombreDelFichero"),getApplicationContext());
-        } else
-            e = new Encryptacion("FicheroClaves",getApplicationContext());
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -63,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                String result = data.getStringExtra("nombreDelFichero");
-                e = new Encryptacion(result,getApplicationContext());
+                String nombreDelFichero = data.getStringExtra("nombreDelFichero");
+                e = new Encryptacion(nombreDelFichero,getApplicationContext());
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 ;
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.cambioClaves) {
             Intent i = new Intent(MainActivity.this, GestionContraseniasActivity.class);
-//            i.putExtra("nombreDelFichero", e.getNombreFichero());
+            i.putExtra("nombreDelFichero", e.getNombreFichero());
             startActivityForResult(i, 1);
         }
 

@@ -1,6 +1,7 @@
 package com.dam.Encripta;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.CharArrayReader;
 import java.io.CharArrayWriter;
@@ -15,25 +16,18 @@ public class Encryptacion {
     private int[][] aClavePrivada;
     private Fichero f;
     private Context context;
+    private String nombreFichero;
     
     public Encryptacion(String nombreFichero,Context context) {
         this.aClavePublica =new int[3];
         this.aClavePrivada =new int[3][16];
-        this.f= new Fichero(nombreFichero,context);
         this.context=context;
-        rellenaAClavePrivada();
-        this.f.GuardaCreaFicheroClavesAndroid(this.aClavePrivada);
+        this.nombreFichero=nombreFichero;
+        this.f= new Fichero(nombreFichero,context);
         f.cargaFicheroClavesAndroid(aClavePrivada);
+        this.f.GuardaCreaFicheroClavesAndroid(this.aClavePrivada);
+
     }
-    private void rellenaAClavePrivada(){
-        Random r = new Random();
-        for(int i=0;i< aClavePrivada.length;i++){
-            for (int j = 0; j < 16; j++)
-                //genera las claves que se guardan en el fichero y en las que se basa aClavePublica para hacer las tareas
-                aClavePrivada[i][j]=r.nextInt(33);
-        }
-    }
-    
     
     public static List<Integer> factorial(long number) {
         long n = number;
@@ -285,5 +279,9 @@ public class Encryptacion {
 
     public void setaClavePrivada(int[][] aClavePrivada) {
         this.aClavePrivada = aClavePrivada;
+    }
+
+    public String getNombreFichero() {
+        return nombreFichero;
     }
 }

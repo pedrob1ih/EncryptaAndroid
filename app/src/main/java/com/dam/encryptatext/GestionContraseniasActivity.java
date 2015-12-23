@@ -90,7 +90,7 @@ public class GestionContraseniasActivity extends AppCompatActivity {
 
         if (id == R.id.mainActivity) {
             Intent i = new Intent(GestionContraseniasActivity.this,MainActivity.class);
-//            i.putExtra("nombreDelFichero", e.getNombreFichero());
+            i.putExtra("nombreDelFichero", e.getNombreFichero());
             setResult(Activity.RESULT_OK, i);
             finish();
         }
