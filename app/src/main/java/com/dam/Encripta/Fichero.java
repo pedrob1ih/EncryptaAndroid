@@ -40,12 +40,12 @@ public class Fichero {
             OutputStreamWriter fout=
                     new OutputStreamWriter(this.context.openFileOutput(nombreFichero, Context.MODE_PRIVATE));
             fout.write(patrones);
-            Log.i("Info Guardar: ", patrones);
+            //Log.i("Info Guardar: ", patrones);
             fout.close();
         }
         catch (Exception ex)
         {
-//            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+//            //Log.e("Ficheros", "Error al escribir fichero a memoria interna");
         }
     }
 
@@ -61,7 +61,7 @@ public class Fichero {
             texto = fin.readLine();
             fin.close();
         } catch (Exception ex) {
-//            Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+//            //Log.e("Ficheros", "Error al leer fichero desde memoria interna");
         }
         return texto;
     }
@@ -74,7 +74,7 @@ public class Fichero {
                                     context.openFileInput(nombreFichero)));
 
             String texto = fin.readLine();
-            Log.i("Info CargarFichero: ",texto);
+            //Log.i("Info CargarFichero: ",texto);
             fin.close();
             String temp="";
             int j=0;
@@ -97,7 +97,7 @@ public class Fichero {
 
             }
         } catch (Exception ex) {
-//            Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+//            //Log.e("Ficheros", "Error al leer fichero desde memoria interna");
         }
     }
     public boolean isNumber(char input){
