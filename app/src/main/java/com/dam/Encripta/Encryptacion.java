@@ -21,8 +21,17 @@ public class Encryptacion {
         this.aClavePrivada =new int[3][16];
         this.f= new Fichero(nombreFichero,context);
         this.context=context;
+        rellenaAClavePrivada();
         this.f.GuardaCreaFicheroClavesAndroid(this.aClavePrivada);
         f.cargaFicheroClavesAndroid(aClavePrivada);
+    }
+    private void rellenaAClavePrivada(){
+        Random r = new Random();
+        for(int i=0;i< aClavePrivada.length;i++){
+            for (int j = 0; j < 16; j++)
+                //genera las claves que se guardan en el fichero y en las que se basa aClavePublica para hacer las tareas
+                aClavePrivada[i][j]=r.nextInt(33);
+        }
     }
     
     
@@ -70,17 +79,11 @@ public class Encryptacion {
         for(int i=0;i< aClavePublica.length;i++)
             //genera una clave q hace posible la desencriptacion
             aClavePublica[i]=r.nextInt(10);
-//        for(int i=0;i< aClavePrivada.length;i++){
-//            for (int j = 0; j < 16; j++)
-//                //genera las claves que se guardan en el fichero y en las que se basa aClavePublica para hacer las tareas
-//                aClavePrivada[i][j]=r.nextInt(33);
-//        }
     }
     //ENCRIPTACION
     public String encripta(String texto){
         this.generaClavepublica();
 
-        f.cargaFicheroClavesAndroid(aClavePrivada);
         texto=texto.replace("\n", "%/");
         
         return enInsertaClave(this.enRestaStrMas0(texto));

@@ -1,6 +1,7 @@
 package com.dam.Encripta;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -72,6 +73,7 @@ public class Fichero {
                                     context.openFileInput(nombreFichero)));
 
             String texto = fin.readLine();
+            Log.i("Info Fichero : ",texto);
             fin.close();
             String temp="";
             int j=0;

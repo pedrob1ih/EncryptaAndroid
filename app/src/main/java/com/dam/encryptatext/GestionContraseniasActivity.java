@@ -63,7 +63,7 @@ public class GestionContraseniasActivity extends AppCompatActivity {
         public void onClick(View v) {
             try {
                 e.generaClaves(eTEntradaUsuario.getText().toString());
-                e.guardarClavePrivada();
+                e.guardarClavePrivadaAndroid();
                 tVCajaDeTexto.setText(formaListado());
             } catch (Exception e1) {
                 tVCajaDeTexto.setText(e1.getMessage());
