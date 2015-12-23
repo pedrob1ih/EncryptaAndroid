@@ -1,5 +1,6 @@
 package com.dam.encryptatext;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -46,6 +47,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("nombreDelFichero");
+                e= new Encryptacion(result);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                ;
+            }
+        }
+    }
+
     View.OnClickListener listenerConvertir=new View.OnClickListener(){
 
         @Override
@@ -87,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.cambioClaves) {
             Intent i = new Intent(MainActivity.this,GestionContraseniasActivity.class);
             i.putExtra("nombreDelFichero",e.getNombreFichero());
-            startActivity(i);
-            finish();
+            startActivityForResult(i, 1);
         }
 
         return super.onOptionsItemSelected(item);

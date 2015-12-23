@@ -1,5 +1,6 @@
 package com.dam.encryptatext;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -90,7 +91,7 @@ public class GestionContraseniasActivity extends AppCompatActivity {
         if (id == R.id.mainActivity) {
             Intent i = new Intent(GestionContraseniasActivity.this,MainActivity.class);
             i.putExtra("nombreDelFichero",e.getNombreFichero());
-            startActivity(i);
+            setResult(Activity.RESULT_OK, i);
             finish();
         }
         return super.onOptionsItemSelected(item);
