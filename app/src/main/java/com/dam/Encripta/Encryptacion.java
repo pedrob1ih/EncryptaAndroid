@@ -1,5 +1,7 @@
 package com.dam.Encripta;
 
+import android.content.Context;
+
 import java.io.CharArrayReader;
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -12,11 +14,13 @@ public class Encryptacion {
     private int aClaves[];
     private int[][] aPatrones;
     private Fichero f;
+    private Context context;
     
-    public Encryptacion(String nombreFichero) {
+    public Encryptacion(String nombreFichero,Context context) {
         this.aClaves=new int[3];
         this.aPatrones=new int[3][16];
-        this.f= new Fichero(nombreFichero);
+        this.f= new Fichero(nombreFichero,context);
+        this.context=context;
     }
     
     
@@ -73,7 +77,7 @@ public class Encryptacion {
     //ENCRIPTACION
     public String encripta(String texto){
         this.generaClavepublica();
-        f.leeFicheroClaves(aPatrones);
+        f.cargaFicheroClaves(aPatrones);
         texto=texto.replace("\n", "%/");
         
         return enInsertaClave(this.enRestaStrMas0(texto));
@@ -151,7 +155,7 @@ public class Encryptacion {
     public String desencripta(String tEncriptado) throws Exception{
         //quita la clave y la añade a el array de claves
         //separa dos a dos los caracteres del String de entrada
-        f.leeFicheroClaves(aPatrones);
+        f.cargaFicheroClaves(aPatrones);
         ArrayList alSS=desConcat3a3(desQuitaClave(tEncriptado)); 
         // suma el valor que previamente ha sido restado
         desSuma(alSS); 
@@ -247,17 +251,17 @@ public class Encryptacion {
         return false;
     }
     
-    public void guardarClavePublica(){
+    public void guardarClavePrivada(){
         f.GuardaCreaFicheroClaves(aPatrones);
     }
-    public void leerFichero(){
-        f.leeFicheroClaves(aPatrones);
+    public void leerClavesPrivadas(){
+        f.cargaFicheroClaves(aPatrones);
     }
-    public void guardaFicheroEncriptado(String nFichero,String texto){
-        f.guardaFicheroEncriptado(nFichero,texto);
+    public void guardarClavePrivadaAndroid(){
+        f.GuardaCreaFicheroClavesAndroid(aPatrones);
     }
-    public void guardaFicheroEncriptado(String nFichero){
-        f.cargaFicheroEncriptado(nFichero);
+    public void leerClavesPrivadasAndroid(){
+        f.cargaFicheroClavesAndroid(aPatrones);
     }
     
     //GETTERS & SETTERS

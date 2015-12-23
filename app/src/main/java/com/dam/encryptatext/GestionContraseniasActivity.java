@@ -38,10 +38,10 @@ public class GestionContraseniasActivity extends AppCompatActivity {
         bVerPatron.setOnClickListener(listenetVerPatron);
         Bundle b= this.getIntent().getExtras();
         if(b!=null){
-            e= new Encryptacion(b.getString("nombreDelFichero"));
+            e= new Encryptacion(b.getString("nombreDelFichero"),getApplicationContext());
         }
         else
-            e= new Encryptacion("FicheroClaves");
+            e= new Encryptacion("FicheroClaves",getApplicationContext());
 
 
     }
@@ -63,7 +63,7 @@ public class GestionContraseniasActivity extends AppCompatActivity {
         public void onClick(View v) {
             try {
                 e.generaClaves(eTEntradaUsuario.getText().toString());
-                e.guardarClavePublica();
+                e.guardarClavePrivada();
                 tVCajaDeTexto.setText(formaListado());
             } catch (Exception e1) {
                 tVCajaDeTexto.setText(e1.getMessage());

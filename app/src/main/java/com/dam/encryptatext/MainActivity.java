@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        e = new Encryptacion("FicheroClaves");
+        e = new Encryptacion("FicheroClaves",getApplicationContext());
 
         tvSalida = (TextView) findViewById(R.id.tVSalida);
         bConvertir = (Button) findViewById(R.id.bConvertir);
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
-            e = new Encryptacion(b.getString("nombreDelFichero"));
+            e = new Encryptacion(b.getString("nombreDelFichero"),getApplicationContext());
         } else
-            e = new Encryptacion("FicheroClaves");
+            e = new Encryptacion("FicheroClaves",getApplicationContext());
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getStringExtra("nombreDelFichero");
-                e = new Encryptacion(result);
+                e = new Encryptacion(result,getApplicationContext());
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 ;
