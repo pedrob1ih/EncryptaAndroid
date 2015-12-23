@@ -71,8 +71,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (eTEntradaUsuario.getText().toString() != null) {
-                tvSalida.setText(e.encripta(eTEntradaUsuario.getText().toString()));
-
+                String texto=eTEntradaUsuario.getText().toString();
+                if(e.isEncripy(texto))
+                    try {
+                        tvSalida.setText(e.desencripta(eTEntradaUsuario.getText().toString()));
+                    } catch (Exception e1) {
+//                        e1.printStackTrace();
+                    }
+                else
+                    tvSalida.setText(e.encripta(eTEntradaUsuario.getText().toString()));
             }
 
         }
