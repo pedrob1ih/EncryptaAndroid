@@ -11,16 +11,18 @@ import java.util.Random;
 
 
 public class Encryptacion {
-    private int aClaves[];
-    private int[][] aPatrones;
+    private int aClavePublica[];
+    private int[][] aClavePrivada;
     private Fichero f;
     private Context context;
     
     public Encryptacion(String nombreFichero,Context context) {
-        this.aClaves=new int[3];
-        this.aPatrones=new int[3][16];
+        this.aClavePublica =new int[3];
+        this.aClavePrivada =new int[3][16];
         this.f= new Fichero(nombreFichero,context);
         this.context=context;
+        this.f.GuardaCreaFicheroClavesAndroid(this.aClavePrivada);
+        f.cargaFicheroClavesAndroid(aClavePrivada);
     }
     
     
@@ -49,7 +51,7 @@ public class Encryptacion {
                     int valor=car.read();
                     while (valor >30)
                         valor-=30;
-                    this.aPatrones[i][j]=valor;
+                    this.aClavePrivada[i][j]=valor;
                 }
             }
         }
@@ -65,19 +67,20 @@ public class Encryptacion {
     //ELECCION DE CLAVE 
     public void generaClavepublica(){
         Random r=new Random();
-        for(int i=0;i<aClaves.length;i++)
+        for(int i=0;i< aClavePublica.length;i++)
             //genera una clave q hace posible la desencriptacion
-            aClaves[i]=r.nextInt(10);
-        for(int i=0;i<aPatrones.length;i++){
-            for (int j = 0; j < 16; j++)
-                //genera las claves que se guardan en el fichero y en las que se basa aClaves para hacer las tareas
-                aPatrones[i][j]=r.nextInt(33);
-        }
+            aClavePublica[i]=r.nextInt(10);
+//        for(int i=0;i< aClavePrivada.length;i++){
+//            for (int j = 0; j < 16; j++)
+//                //genera las claves que se guardan en el fichero y en las que se basa aClavePublica para hacer las tareas
+//                aClavePrivada[i][j]=r.nextInt(33);
+//        }
     }
     //ENCRIPTACION
     public String encripta(String texto){
         this.generaClavepublica();
-        f.cargaFicheroClaves(aPatrones);
+
+        f.cargaFicheroClavesAndroid(aClavePrivada);
         texto=texto.replace("\n", "%/");
         
         return enInsertaClave(this.enRestaStrMas0(texto));
@@ -86,13 +89,13 @@ public class Encryptacion {
         int x=0;
         String outPut="";
         //dependiendo de la frecuencia de cada una de las claves se usará un array u otro
-        int fA=this.aClaves[0];
-        int fB=this.aClaves[1];
-        int fC=this.aClaves[2];
+        int fA=this.aClavePublica[0];
+        int fB=this.aClavePublica[1];
+        int fC=this.aClavePublica[2];
         while(x<texto.length()) {
             for (int i = 0; i < fA && x<texto.length(); i++) {
                 int a=(int)texto.charAt(x);
-                a-=this.aPatrones[0][i];
+                a-=this.aClavePrivada[0][i];
                 if(a<10)//dos ceros mas 
                     outPut=outPut+"00"+a;    
                 else if(a<100) //un cero mas
@@ -100,11 +103,11 @@ public class Encryptacion {
                 else 
                     outPut=outPut+a;    
                 x++;
-                System.out.println(outPut);
+                //System.out.println(outPut);
             }
             for (int i = 0; i < fB && x<texto.length(); i++) {
                 int a=(int)texto.charAt(x);
-                a-=this.aPatrones[1][i];
+                a-=this.aClavePrivada[1][i];
                 if(a<10)//dos ceros mas 
                     outPut=outPut+"00"+a;    
                 else if(a<100) //un cero mas
@@ -112,11 +115,11 @@ public class Encryptacion {
                 else 
                     outPut=outPut+a;    
                 x++;
-                System.out.println(outPut);
+                //System.out.println(outPut);
             }
             for (int i = 0; i < fC && x<texto.length(); i++) {
                 int a=(int)texto.charAt(x);
-                a-=this.aPatrones[2][i];
+                a-=this.aClavePrivada[2][i];
                 if(a<10)//dos ceros mas 
                     outPut=outPut+"00"+a;    
                 else if(a<100) //un cero mas
@@ -124,7 +127,7 @@ public class Encryptacion {
                 else 
                     outPut=outPut+a;    
                 x++;
-                System.out.println(outPut);
+                //System.out.println(outPut);
             }
         }                
         return outPut;
@@ -133,20 +136,20 @@ public class Encryptacion {
         String outPut="";
         //la clave de descifre se coloca en la primera pos , la tercera y la ultima
         //1 23 1 2 3123
-//        System.out.println("clave 1 : "+this.aClaves[0]);
-//        System.out.println("clave 2 : "+this.aClaves[1]);
-//        System.out.println("clave 3 : "+this.aClaves[2]);
-        texto=this.aClaves[0]+texto; //insercion de la primera clave
+//        //System.out.println("clave 1 : "+this.aClavePublica[0]);
+//        //System.out.println("clave 2 : "+this.aClavePublica[1]);
+//        //System.out.println("clave 3 : "+this.aClavePublica[2]);
+        texto=this.aClavePublica[0]+texto; //insercion de la primera clave
         
         for (int i = 0; i < 3; i++) 
         outPut=outPut+texto.toCharArray()[i]; // se añade la primera clave mas dos caracteres del texto
         
-        outPut=outPut+this.aClaves[1]; // se añade la segunda clave al texto en la tercera posicion
+        outPut=outPut+this.aClavePublica[1]; // se añade la segunda clave al texto en la tercera posicion
         
         for (int i = 3; i <texto.toCharArray().length ; i++) 
         outPut=outPut+texto.toCharArray()[i];
         
-        outPut=outPut+this.aClaves[2]; // se pasa la tercera clave al texto 
+        outPut=outPut+this.aClavePublica[2]; // se pasa la tercera clave al texto
         
         return outPut;
     }   //ADDICION DE LA CLAVE
@@ -155,7 +158,7 @@ public class Encryptacion {
     public String desencripta(String tEncriptado) throws Exception{
         //quita la clave y la añade a el array de claves
         //separa dos a dos los caracteres del String de entrada
-        f.cargaFicheroClaves(aPatrones);
+        f.cargaFicheroClaves(aClavePrivada);
         ArrayList alSS=desConcat3a3(desQuitaClave(tEncriptado)); 
         // suma el valor que previamente ha sido restado
         desSuma(alSS); 
@@ -170,8 +173,8 @@ public class Encryptacion {
                 tLimpio=tLimpio+tEncriptado.charAt(i);
             }    
             else{   
-                aClaves[j]=Integer.parseInt(String.valueOf(tEncriptado.charAt(i)));
-//                System.out.println("desQuitaClave = "+aClaves[j]);
+                aClavePublica[j]=Integer.parseInt(String.valueOf(tEncriptado.charAt(i)));
+//                //System.out.println("desQuitaClave = "+aClavePublica[j]);
                 j++;
             }
         }
@@ -187,7 +190,7 @@ public class Encryptacion {
             temp+=String.valueOf(tLimpio.charAt(i+2));
             arSS.add(Integer.valueOf(temp));    
             i+=3;
-//            System.out.println("concatena : "+temp);
+//            //System.out.println("concatena : "+temp);
         }     
         return arSS;
     } //concatena dos a dos el texto Encriptado
@@ -195,24 +198,24 @@ public class Encryptacion {
         int x=0;
         
         //dependiendo de la frecuencia de cada una de las claves se usará un array u otro
-        int pA=this.aClaves[0];
-        int pB=this.aClaves[1];
-        int pC=this.aClaves[2];
+        int pA=this.aClavePublica[0];
+        int pB=this.aClavePublica[1];
+        int pC=this.aClavePublica[2];
         
         while(x<arSS.size()) {
             for (int i = 0; i < pA && x<arSS.size() ; i++) {
-                arSS.set(x, ((int)arSS.get(x)+this.aPatrones[0][i]));
-//                System.out.println("suma = "+ ((int)arSS.get(i)+this.aPatrones[0][i]));
+                arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[0][i]));
+//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[0][i]));
                 x++;
             }
             for (int i = 0; i < pB && x<arSS.size() ; i++) {
-                arSS.set(x, ((int)arSS.get(x)+this.aPatrones[1][i]));
-//                System.out.println("suma = "+ ((int)arSS.get(i)+this.aPatrones[1][i]));
+                arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[1][i]));
+//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[1][i]));
                 x++;
             }
             for (int i = 0; i < pC && x<arSS.size() ; i++) {
-                arSS.set(x, ((int)arSS.get(x)+this.aPatrones[2][i]));
-//                System.out.println("suma = "+ ((int)arSS.get(i)+this.aPatrones[2][i]));
+                arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[2][i]));
+//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[2][i]));
                 x++;
             }
         }
@@ -252,32 +255,32 @@ public class Encryptacion {
     }
     
     public void guardarClavePrivada(){
-        f.GuardaCreaFicheroClaves(aPatrones);
+        f.GuardaCreaFicheroClaves(aClavePrivada);
     }
     public void leerClavesPrivadas(){
-        f.cargaFicheroClaves(aPatrones);
+        f.cargaFicheroClaves(aClavePrivada);
     }
     public void guardarClavePrivadaAndroid(){
-        f.GuardaCreaFicheroClavesAndroid(aPatrones);
+        f.GuardaCreaFicheroClavesAndroid(aClavePrivada);
     }
     public void leerClavesPrivadasAndroid(){
-        f.cargaFicheroClavesAndroid(aPatrones);
+        f.cargaFicheroClavesAndroid(aClavePrivada);
     }
     
     //GETTERS & SETTERS
-    public int[] getaClaves() {
-        return aClaves;
+    public int[] getaClavePublica() {
+        return aClavePublica;
     }
 
-    public int[][] getaPatrones() {
-        return aPatrones;
+    public int[][] getaClavePrivada() {
+        return aClavePrivada;
     }
     
-    public void setaClaves(int[] aClaves) {
-        this.aClaves = aClaves;
+    public void setaClavePublica(int[] aClavePublica) {
+        this.aClavePublica = aClavePublica;
     }
 
-    public void setaPatrones(int[][] aPatrones) {
-        this.aPatrones = aPatrones;
+    public void setaClavePrivada(int[][] aClavePrivada) {
+        this.aClavePrivada = aClavePrivada;
     }
 }
