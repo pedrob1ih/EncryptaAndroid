@@ -68,11 +68,18 @@
                 android:layout_gravity="bottom" >
 
                 <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrar"
+                    android:id="@+id/bBorrar" />
+
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/convertir"
                     android:id="@+id/bConvertir"
                     android:layout_gravity="bottom" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -22,7 +22,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvSalida;
-    private Button bConvertir, bCopiar;
+    private Button bConvertir, bCopiar,bBorrar;
     private EditText eTEntradaUsuario;
     private Encryptacion e;
     /**
@@ -42,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         tvSalida = (TextView) findViewById(R.id.tVSalida);
         bConvertir = (Button) findViewById(R.id.bConvertir);
         bCopiar = (Button) findViewById(R.id.bCopiar);
+        bBorrar= (Button) findViewById(R.id.bBorrar);
         eTEntradaUsuario = (EditText) findViewById(R.id.eTEntradaUsuario);
 
         bConvertir.setOnClickListener(listenerConvertir);
         bCopiar.setOnClickListener(listenerCopiar);
+        bBorrar.setOnClickListener(listenerBorrar);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -82,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
                     tvSalida.setText(e.encripta(eTEntradaUsuario.getText().toString()));
             }
 
+        }
+    };
+    View.OnClickListener listenerBorrar = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            eTEntradaUsuario.setText("");
         }
     };
     View.OnClickListener listenerCopiar = new View.OnClickListener() {

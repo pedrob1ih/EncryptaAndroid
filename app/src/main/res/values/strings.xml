@@ -8,4 +8,5 @@
     <string name="copiar">Copiar</string>
     <string name="cambioClaves">Cambio De Claves</string>
     <string name="mensajes">Mensajes</string>
+    <string name="borrar">Borrar</string>
 </resources>
