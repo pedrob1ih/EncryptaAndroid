@@ -1,7 +1,6 @@
 package com.dam.Encripta;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.CharArrayReader;
 import java.io.CharArrayWriter;
@@ -76,11 +75,9 @@ public class Encryptacion {
     }
     //ENCRIPTACION
     public String encripta(String texto){
-        this.generaClavepublica();
+        generaClavepublica();
 
-        texto=texto.replace("\n", "%/");
-        
-        return enInsertaClave(this.enRestaStrMas0(texto));
+        return enInsertaClave(this.enRestaStrMas0(texto.replace("\n", "%/")));
     }   //Métodos de Encriptacion
     private String enRestaStrMas0(String texto){ //resta valor a la cadena en ascii individualmente
         int x=0;
@@ -133,9 +130,9 @@ public class Encryptacion {
         String outPut="";
         //la clave de descifre se coloca en la primera pos , la tercera y la ultima
         //1 23 1 2 3123
-//        //System.out.println("clave 1 : "+this.aClavePublica[0]);
-//        //System.out.println("clave 2 : "+this.aClavePublica[1]);
-//        //System.out.println("clave 3 : "+this.aClavePublica[2]);
+        //System.out.println("clave 1 : "+this.aClavePublica[0]);
+        //System.out.println("clave 2 : "+this.aClavePublica[1]);
+        //System.out.println("clave 3 : "+this.aClavePublica[2]);
         texto=this.aClavePublica[0]+texto; //insercion de la primera clave
         
         for (int i = 0; i < 3; i++) 
@@ -155,7 +152,6 @@ public class Encryptacion {
     public String desencripta(String tEncriptado) throws Exception{
         //quita la clave y la añade a el array de claves
         //separa dos a dos los caracteres del String de entrada
-        f.cargaFicheroClaves(aClavePrivada);
         ArrayList alSS=desConcat3a3(desQuitaClave(tEncriptado)); 
         // suma el valor que previamente ha sido restado
         desSuma(alSS); 
@@ -171,7 +167,7 @@ public class Encryptacion {
             }    
             else{   
                 aClavePublica[j]=Integer.parseInt(String.valueOf(tEncriptado.charAt(i)));
-//                //System.out.println("desQuitaClave = "+aClavePublica[j]);
+                //System.out.println("desQuitaClave = "+aClavePublica[j]);
                 j++;
             }
         }
@@ -187,7 +183,7 @@ public class Encryptacion {
             temp+=String.valueOf(tLimpio.charAt(i+2));
             arSS.add(Integer.valueOf(temp));    
             i+=3;
-//            //System.out.println("concatena : "+temp);
+            //System.out.println("concatena : "+temp);
         }     
         return arSS;
     } //concatena dos a dos el texto Encriptado
@@ -202,17 +198,17 @@ public class Encryptacion {
         while(x<arSS.size()) {
             for (int i = 0; i < pA && x<arSS.size() ; i++) {
                 arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[0][i]));
-//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[0][i]));
+                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[0][i]));
                 x++;
             }
             for (int i = 0; i < pB && x<arSS.size() ; i++) {
                 arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[1][i]));
-//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[1][i]));
+                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[1][i]));
                 x++;
             }
             for (int i = 0; i < pC && x<arSS.size() ; i++) {
                 arSS.set(x, ((int)arSS.get(x)+this.aClavePrivada[2][i]));
-//                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[2][i]));
+                //System.out.println("suma = "+ ((int)arSS.get(i)+this.aClavePrivada[2][i]));
                 x++;
             }
         }
@@ -250,17 +246,11 @@ public class Encryptacion {
         }
         return false;
     }
-    
-    public void guardarClavePrivada(){
-        f.GuardaCreaFicheroClaves(aClavePrivada);
-    }
-    public void leerClavesPrivadas(){
-        f.cargaFicheroClaves(aClavePrivada);
-    }
+
     public void guardarClavePrivadaAndroid(){
         f.GuardaCreaFicheroClavesAndroid(aClavePrivada);
     }
-    public void leerClavesPrivadasAndroid(){
+    public void cargaClavePrivadasAndroid(){
         f.cargaFicheroClavesAndroid(aClavePrivada);
     }
     

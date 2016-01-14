@@ -24,7 +24,6 @@ public class Fichero {
         this.nombreFichero = nombreFichero;
         this.context= context;
     }
-    //CREACION O LECTURA DEL FICHERO ALEATORIO E INSERCION DE ARRAYS
 
     public void GuardaCreaFicheroClavesAndroid(int aNumEm[][]){
         String patrones="";
@@ -40,12 +39,11 @@ public class Fichero {
             OutputStreamWriter fout=
                     new OutputStreamWriter(this.context.openFileOutput(nombreFichero, Context.MODE_PRIVATE));
             fout.write(patrones);
-            //Log.i("Info Guardar: ", patrones);
             fout.close();
         }
         catch (Exception ex)
         {
-//            //Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+            Log.e("Ficheros", ex.getMessage());
         }
     }
 
@@ -61,7 +59,7 @@ public class Fichero {
             texto = fin.readLine();
             fin.close();
         } catch (Exception ex) {
-//            //Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+            Log.e("Ficheros", ex.getMessage());
         }
         return texto;
     }
@@ -74,7 +72,6 @@ public class Fichero {
                                     context.openFileInput(nombreFichero)));
 
             String texto = fin.readLine();
-            //Log.i("Info CargarFichero: ",texto);
             fin.close();
             String temp="";
             int j=0;
@@ -97,7 +94,7 @@ public class Fichero {
 
             }
         } catch (Exception ex) {
-//            //Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+            Log.e("Ficheros", ex.getMessage());
         }
     }
     public boolean isNumber(char input){
@@ -111,71 +108,6 @@ public class Fichero {
         return false;
     }
 
-    public void GuardaCreaFicheroClaves(int aNumEm[][]){
-        //generacionn de un fichero con numeros aleatorio entre 0 y 90 separados por '.'
-        
-        FileOutputStream fos=null;
-        DataOutputStream dos=null;
-        try{
-            fos = new FileOutputStream(this.nombreFichero);
-            dos = new DataOutputStream(fos);
-            for (int i = 0; i < aNumEm.length; i++) {
-                dos.writeChar('.');
-                for (int j = 0; j < 16; j++) {
-                    dos.writeInt(aNumEm[i][j]);
-                }
-            }
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally{
-            try{
-                if (dos!=null) dos.close();
-                if (fos!=null) fos.close();
-            }
-            catch(IOException e){
-                e.printStackTrace();
-            }
-        }            
-    }
-    public void cargaFicheroClaves(int aNumEm[][]){
-        File f=null;
-        FileInputStream fis=null;
-        DataInputStream dis=null;
-        try{
-            f=new File(this.nombreFichero);
-            if (f.exists()) {
-                fis=new FileInputStream(f);
-                dis=new DataInputStream(fis);
-                int i=0;
-                while (true) {    
-                    dis.readChar();
-                    for (int j = 0; j < 16; j++) {
-                        aNumEm[i][j]=dis.readInt();
-                    }
-                    i++;
-                }
-            }
-        }
-        catch (EOFException eof) { //...
-        }
-        catch (FileNotFoundException fnf) { //...
-            
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-            if (dis!=null) dis.close();
-            if (fis!=null) fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
     public void guardaFicheroEncriptado(String nombreFichero,String texto){
         FileOutputStream fos=null;
         DataOutputStream dos=null;
@@ -195,7 +127,7 @@ public class Fichero {
                 if (fos!=null) fos.close();
             }
             catch(IOException e){
-                e.printStackTrace();
+                Log.e("Ficheros", e.getMessage());
             }
         }            
     }
@@ -221,7 +153,7 @@ public class Fichero {
             
         }
         catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Ficheros", e.getMessage());
         }
         finally {
             try {
